@@ -34,7 +34,9 @@ class SteeringControl(Node):
         self.get_logger().info("Message sent on Enable state data: {}".format(msg_init))
 
     def steering_angle_callback(self, msg):
-        if -540 <= msg.data <= 540:
+        if msg is None:
+            self.yaw_control = -5.0
+        elif -540 <= msg.data <= 540:
             self.yaw_control = msg.data
             self.angle = self.yaw_control
             self.elec_angle_dec = self.angle * 27
